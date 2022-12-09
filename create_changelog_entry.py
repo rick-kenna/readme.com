@@ -1,6 +1,7 @@
 # Create a ReadMe changelog entry.
 # The YAML file format is compatible with the rdme script provided by ReadMe.com.
 
+import os
 import sys
 import json
 import yaml
@@ -109,8 +110,13 @@ if __name__ == "__main__":
         print("Need required input parameters.")
         print_help()
 
-    # OpenAPI project API key and base URL.
-    api_key = "rdme_xn8s9heb1bf82c7618d969ed1df14ba2428d496195eeed063a107e397549a62aeeaa8f"
+    # Obtain OpenAPI project ReadMe.com API key.
+    api_key = os.getenv('README_API_KEY')
+    if api_key is None:
+        print_error(f"Environment variable README_API_KEY is non-existent")
+        sys.exit(1)
+
+    # Base URL for ReadMe APIs.
     base_url = "https://dash.readme.com/api/"
 
     headers = { 'Content-Type': 'application/json; charset=utf-8',
